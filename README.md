@@ -28,6 +28,7 @@
 
 
 5. Revise la documentación de ‘PreparedStatement’, del API JDBC.
+
 6. En la clase JDBCExample juste los parámetros de conexión a la base de datos con los datos reales:
 	```
 	Url: jdbc:mysql://desarrollo.is.escuelaing.edu.co:3306/bdprueba
@@ -41,6 +42,7 @@
 	1. nombresProductosPedido
 	2. valorTotalPedido - El resultado final lo debe retornar la base de datos, no se deben hacer operaciones en memoria.
 	3. registrarNuevoProducto - Use su código de estudiante para evitar colisiones.
+
 8. Verifique por medio de un cliente SQL, que la información retornada por el programa coincide con la que se encuentra almacenada en base de datos.
 
 ## Sección II. - Introducción a MyBatis
