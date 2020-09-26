@@ -22,7 +22,8 @@
 3. Desde esta clase se realizará una conexión a una base de datos MySQL por medio de JDBC y sus "Prepared Statements".
 
 4. En un motor de base de datos SQL se tiene un esquema con el siguiente modelo de base de datos (para registrar pedidos sobre productos):Model.png
-	![alt](resources/RMODEL.PNG)
+	
+	![alt](resources/RMODEL.png)
 
 
 
