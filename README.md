@@ -44,6 +44,27 @@
 	3. registrarNuevoProducto - Use su código de estudiante para evitar colisiones.
 
 8. Verifique por medio de un cliente SQL, que la información retornada por el programa coincide con la que se encuentra almacenada en base de datos.
+	```
+	
+	SELECT nombre , pedido_fk 
+	FROM ORD_PRODUCTOS po ,ORD_DETALLE_PEDIDO pe 
+	WHERE po.codigo = pe.producto_fk 
+	ORDER BY pedido_fk;
+	
+	```
+	[alt](resources/DBeaver0.PNG)
+	
+	```
+	
+	SELECT sum(cantidad) as precio
+    FROM ORD_DETALLE_PEDIDO 
+    WHERE pedido_fk = 1
+    GROUP BY (pedido_fk);
+	
+	```
+	[alt](resources/DBeaver1.PNG)
+	
+	
 
 ## Sección II. - Introducción a MyBatis
 1. Revise la documentación básica de MyBatis de forma que entienda para qué sirve y el uso básico que se le puede dar al framework.

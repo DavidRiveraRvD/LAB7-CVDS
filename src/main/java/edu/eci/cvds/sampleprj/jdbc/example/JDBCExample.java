@@ -94,30 +94,30 @@ public class JDBCExample {
      * @return
      */
     public static List<String> nombresProductosPedido(Connection con, int codigoPedido) throws SQLException {
-        List<String> np = new LinkedList<>();
+        List<String> np=new LinkedList<>();
+
         //Crear prepared statement
-        PreparedStatement consultarProductos = null;
         //asignar parámetros
-        String consultaProductosPedido = "SELECT nombre FROM ORD_PRODUCTOS WHERE codigo in (SELECT producto_fk FROM ORD_DETALLE_PEDIDO WHERE pedido_fk = ?);";
-        try{
-            //Pasar la consulta al PreparedStatament
-            consultarProductos = con.prepareStatement(consultaProductosPedido);
-            //Remplazar el primer ? con el codigo necesitado
-            consultarProductos.setInt(1,codigoPedido);
-            //usar executeQuery
-            ResultSet resultSet = consultarProductos.executeQuery();
-            //Sacar resultados del ResultSet
-            while(resultSet.next()){
-                String nombreProducto = resultSet.getString("nombre");
-                //Llenar la lista y retornarla
-                np.add(nombreProducto);
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
+        //usar executeQuery
+        //Sacar resultados del ResultSet
+        //Llenar la lista y retornarla
+
+        PreparedStatement nombreProducto = null;
+        String select = "SELECT nombre , pedido_fk " +
+                "FROM ORD_PRODUCTOS po ,ORD_DETALLE_PEDIDO pe " +
+                "WHERE po.codigo = pe.producto_fk " +
+                "ORDER BY pedido_fk;";
+        nombreProducto = con.prepareStatement(select);
+        ResultSet names = nombreProducto.executeQuery();
+        while(names.next()){
+            String nombre = names.getString("nombre");
+            String pedido = names.getString("pedido_fk");
+            np.add(nombre);
+            np.add(pedido);
         }
-        con.commit();
         return np;
     }
+
 
     /**
      * Calcular el costo total de un pedido
@@ -126,25 +126,23 @@ public class JDBCExample {
      * @return el costo total del pedido (suma de: cantidades*precios)
      */
     public static int valorTotalPedido(Connection con, int codigoPedido) throws SQLException {
-        int valorTotalPedido = 0;
+
         //Crear prepared statement
-        PreparedStatement consultarValorTotal = null;
         //asignar parámetros
-        String consultaValorPedido = "SELECT SUM((SELECT precio from ORD_PRODUCTOS WHERE codigo=producto_fk)*cantidad) AS precio FROM ORD_DETALLE_PEDIDO WHERE pedido_fk=?;";
-        try{
-            //Pasar la consulta al PreparedStatament
-            consultarValorTotal = con.prepareStatement(consultaValorPedido);
-            //Remplazar el primer ? con el codigo pedido
-            consultarValorTotal.setInt(1,codigoPedido);
-            //usar executeQuery
-            ResultSet resultSet = consultarValorTotal.executeQuery();
-            //Sacar resultado del ResultSet
-            resultSet.next();
-            valorTotalPedido = resultSet.getInt("precio");
-        }catch (SQLException e){
-            e.printStackTrace();
+        //usar executeQuery
+        //Sacar resultado del ResultSet
+
+        PreparedStatement costoPedido = null;
+        String select = "SELECT sum(cantidad) as precio " +
+                "FROM ORD_DETALLE_PEDIDO " +
+                "WHERE pedido_fk ="+codigoPedido+" "+
+                "GROUP BY (pedido_fk);";
+        costoPedido = con.prepareStatement(select);
+        ResultSet costo = costoPedido.executeQuery();
+        int precio = 0;
+        while(costo.next()){
+            precio = costo.getInt("precio");
         }
-        con.commit();
-        return valorTotalPedido;
+        return precio;
     }
 }
