@@ -83,8 +83,8 @@ En este laboratorio se utilizará un 'framework' de persistencia. La base de dat
 	usuario: bdprueba
 	pwd: bdprueba
 	base de datos: bdprueba
-
-![](img/MODEL.png)
+	
+	![](img/MODEL.png)
 
 ## Parte I (Para entregar en clase)
 
@@ -130,7 +130,21 @@ En este laboratorio se utilizará un 'framework' de persistencia. La base de dat
         left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento 
         left join VI_ITEMS as i on ir.ITEMS_id=i.id 
         left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id 
+		
+		left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id;
+		left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id;
+		
 	```
+	
+	```	
+		select c.nombre, c.documento, c.telefono, c.direccion, c.email, c.vetado, ir.id, ir.fechainiciorenta, ir.fechafinrenta, i.id, i.nombre, i.descripcion, i.fechalanzamiento, i.tarifaxdia, i.formatorenta, i.genero, ti.id, ti.descripcion 
+		FROM VI_CLIENTES as c 
+		left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento 
+		left join VI_ITEMS as i on ir.ITEMS_id=i.id 
+		left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id;
+	```
+	
+	![alt](resources/DBeaver2.PNG)
 
 3. Abra el archivo XML en el cual se definirán los parámetros para que MyBatis genere el 'mapper' de Cliente (ClienteMapper.xml). Ahora, mapee un elemento de tipo \<select> al método 'consultarClientes':
 
@@ -139,7 +153,7 @@ En este laboratorio se utilizará un 'framework' de persistencia. La base de dat
    			SENTENCIA SQL
 	</select>
 	```
-
+	
 3. Note que el mapeo hecho anteriormente, se indica que los detalles de a qué atributo corresponde cada columna del resultado de la consulta están en un 'resultMap' llamado "ClienteResult". En el XML del mapeo agregue un elemento de tipo &lt;resultMap&gt;, en el cual se defina, para una entidad(clase) en particular, a qué columnas estarán asociadas cada una de sus propiedades (recuerde que propiedad != atributo). La siguiente es un ejemplo del uso de la sintaxis de &lt;resultMap&gt; para la clase Maestro, la cual tiene una relación 'uno a muchos' con la clase DetalleUno y una relación 'uno a uno' con la clase DetalleDos, y donde -a la vez-, DetalleUno tiene una relación 'uno-a-uno- con DetalleDos:
 
 	```xml
