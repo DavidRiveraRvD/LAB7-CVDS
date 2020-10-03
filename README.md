@@ -52,7 +52,7 @@
 	ORDER BY pedido_fk;
 	
 	```
-	[alt](resources/DBeaver0.PNG)
+	![alt](resources/DBeaver0.PNG)
 	
 	```
 	
@@ -62,7 +62,7 @@
     GROUP BY (pedido_fk);
 	
 	```
-	[alt](resources/DBeaver1.PNG)
+	![alt](resources/DBeaver1.PNG)
 	
 	
 
